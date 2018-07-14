@@ -31,8 +31,6 @@ public class Updater {
 
             if (localVersion.exists() && localVersion.isFile()) {
 
-                System.out.println("versioon");
-
                 try(FileInputStream fis = new FileInputStream(localVersion);
                     InputStreamReader isr = new InputStreamReader(fis);
                     BufferedReader in = new BufferedReader(isr)) {
@@ -42,7 +40,7 @@ public class Updater {
                 }
             }
 
-            System.out.println("Actual version: " + appVersion);
+            System.out.println("Actual version is " + appVersion);
 
             String latestURL = serverUrl + "latest";
             System.out.println("Getting latest version on " + latestURL);
@@ -179,7 +177,9 @@ public class Updater {
         System.out.println("Getting update on " + serverUrl + version + "/update");
 
         Yaml yaml = new Yaml();
-        HashMap<String, String> remoteFiles = (HashMap<String, String>) yaml.load(getRemoteFileContent(serverUrl + version + "/update"));exploreDirectory(localDir);
+        HashMap<String, String> remoteFiles = (HashMap<String, String>) yaml.load(getRemoteFileContent(serverUrl + version + "/update"));
+
+        exploreDirectory(localDir);
 
         for (Entry<String, String> remoteEntry : remoteFiles.entrySet()){
 
@@ -267,7 +267,8 @@ public class Updater {
 
         File versionFile = new File(localDir, "version");
 
-        if (versionFile.exists()) versionFile.delete();
+        if (versionFile.exists()) //noinspection ResultOfMethodCallIgnored
+            versionFile.delete();
 
         try(FileWriter fw = new FileWriter(versionFile);
             BufferedWriter out = new BufferedWriter(fw)){

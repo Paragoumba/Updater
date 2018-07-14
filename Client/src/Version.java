@@ -67,7 +67,7 @@ class Version {
 
         String version = Arrays.toString(numbers);
 
-        return version.replace("[", "").replace("]", "").replace(", ", ".") + (build != 0 ? 'b' + build : "");
+        return version.replace("[", "").replace("]", "").replace(", ", ".") + (build != 0 ? "b" + build : "");
 
     }
 }
